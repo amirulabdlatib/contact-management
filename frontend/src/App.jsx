@@ -6,8 +6,19 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import GuestRoute from "./Routes/GuestRoute";
 import AuthRoute from "./Routes/AuthRoute";
+import { useAuth } from "./hooks/useAuth";
 
 function App() {
+    const { loading } = useAuth();
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-screen">
+                <div>Loading...</div>
+            </div>
+        );
+    }
+
     return (
         <>
             <BrowserRouter>

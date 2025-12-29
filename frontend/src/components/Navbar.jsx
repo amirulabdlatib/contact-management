@@ -5,7 +5,7 @@ import { useAuth } from "../hooks/useAuth";
 import api from "../lib/axios";
 
 const Navbar = () => {
-    const { user, loading, setUser } = useAuth();
+    const { user, setUser } = useAuth();
     const navigate = useNavigate();
 
     const logoutMutation = useMutation({
@@ -25,10 +25,6 @@ const Navbar = () => {
     const handleLogout = () => {
         logoutMutation.mutate();
     };
-
-    if (loading) {
-        return <nav>Loading...</nav>;
-    }
 
     return (
         <nav className="flex items-center justify-between">
