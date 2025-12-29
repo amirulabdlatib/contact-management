@@ -1,9 +1,11 @@
-import Layout from "./layouts/Layout";
-import Login from "./pages/login";
-import Home from "./pages/Home";
-import Register from "./pages/register";
-import Dashboard from "./pages/Dashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./layouts/Layout";
+import Login from "./pages/Login";
+import Home from "./pages/Home";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import GuestRoute from "./Routes/GuestRoute";
+import AuthRoute from "./Routes/AuthRoute";
 
 function App() {
     return (
@@ -12,9 +14,34 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Layout />}>
                         <Route index element={<Home />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/register" element={<Register />} />
-                        <Route path="/dashboard" element={<Dashboard />} />
+
+                        {/* Guest Routes for Unauthenticated Users */}
+                        <Route
+                            path="/login"
+                            element={
+                                <GuestRoute>
+                                    <Login />
+                                </GuestRoute>
+                            }
+                        />
+                        <Route
+                            path="/register"
+                            element={
+                                <GuestRoute>
+                                    <Register />
+                                </GuestRoute>
+                            }
+                        />
+
+                        {/* Protected Route for Authenticated Users */}
+                        <Route
+                            path="/dashboard"
+                            element={
+                                <AuthRoute>
+                                    <Dashboard />
+                                </AuthRoute>
+                            }
+                        />
                     </Route>
                 </Routes>
             </BrowserRouter>
