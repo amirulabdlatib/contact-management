@@ -1,9 +1,8 @@
-// frontend\src\pages\Register.jsx
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import api, { getCsrfToken } from "../lib/axios";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Register() {
     const [name, setName] = useState("");
@@ -11,6 +10,7 @@ export default function Register() {
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
     const navigate = useNavigate();
+    const { setUser } = useAuth();
 
     const registerMutation = useMutation({
         mutationFn: async (credentials) => {
@@ -19,6 +19,7 @@ export default function Register() {
             return response.data;
         },
         onSuccess: (data) => {
+            setUser(data.user);
             navigate("/dashboard");
             console.log("Registration successful:", data);
         },

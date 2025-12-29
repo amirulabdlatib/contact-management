@@ -1,12 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import api, { getCsrfToken } from "../lib/axios";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    const { setUser } = useAuth();
 
     const loginMutation = useMutation({
         mutationFn: async (credentials) => {
@@ -15,6 +17,7 @@ export default function Login() {
             return response.data;
         },
         onSuccess: (data) => {
+            setUser(data.user);
             navigate("/dashboard");
             console.log("Login successful:", data);
         },
@@ -24,7 +27,6 @@ export default function Login() {
     });
 
     const handleSubmit = (e) => {
-        ``;
         e.preventDefault();
         loginMutation.mutate({ email, password });
     };

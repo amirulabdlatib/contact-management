@@ -1,5 +1,3 @@
-// frontend\src\context\AuthProvider.jsx
-
 import { useState, useEffect } from "react";
 import { AuthContext } from "./authContext";
 import api from "../lib/axios";
