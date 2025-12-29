@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import api, { getCsrfToken } from "../lib/axios";
 import { useAuth } from "../hooks/useAuth";
@@ -73,9 +73,9 @@ export default function Login() {
 
                     <p className="text-center text-sm text-gray-600 mt-4">
                         Don't have an account?{" "}
-                        <a href="/register" className="text-blue-500 hover:text-blue-600 font-medium">
+                        <Link to="/register" className="text-blue-500 hover:text-blue-600 font-medium">
                             Register here
-                        </a>
+                        </Link>
                     </p>
                 </div>
             </div>
