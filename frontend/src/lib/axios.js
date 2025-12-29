@@ -8,4 +8,8 @@ const api = axios.create({
     withCredentials: true,
 });
 
+export const getCsrfToken = () => {
+    return api.get("/sanctum/csrf-cookie");
+};
+
 export default api;
