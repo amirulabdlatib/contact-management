@@ -1,3 +1,4 @@
+import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
 const Layout = () => {
@@ -5,7 +6,9 @@ const Layout = () => {
         <>
             <Navbar />
 
-            <main></main>
+            <main>
+                <Outlet />
+            </main>
         </>
     );
 };

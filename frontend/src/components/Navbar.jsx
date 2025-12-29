@@ -1,15 +1,14 @@
+import { Link } from "react-router-dom";
+import Home from "../pages/Home";
+
 const Navbar = () => {
     return (
         <>
             <nav className="flex items-center justify-between">
-                <h1 className="font-bold text-indigo-600">Contact app</h1>
-                <div>
-                    <a to="/" className="px-3 py-1 rounded-md hover:bg-indigo-600 hover:text-white">
-                        Home
-                    </a>
-                    <a to="/create" className="px-3 py-1 rounded-md hover:bg-indigo-600 hover:text-white">
-                        New Post
-                    </a>
+                <Link to="/">Contact app</Link>
+                <div className="space-x-2 mr-2">
+                    <Link to="/login">Login</Link>
+                    <Link to="/register">Register</Link>
                 </div>
             </nav>
         </>
