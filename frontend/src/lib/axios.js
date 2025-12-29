@@ -6,6 +6,7 @@ const api = axios.create({
         Accept: "application/json",
     },
     withCredentials: true,
+    withXSRFToken: true,
 });
 
 export const getCsrfToken = () => {
