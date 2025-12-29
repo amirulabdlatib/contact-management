@@ -9,16 +9,6 @@ const api = axios.create({
     withXSRFToken: true,
 });
 
-api.interceptors.response.use(
-    (response) => response,
-    (error) => {
-        if (error.response?.status === 401) {
-            window.location.href = "/login";
-        }
-        return Promise.reject(error);
-    }
-);
-
 export const getCsrfToken = () => {
     return api.get("/sanctum/csrf-cookie");
 };
