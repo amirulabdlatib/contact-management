@@ -7,6 +7,9 @@ import Dashboard from "./pages/Dashboard";
 import GuestRoute from "./Routes/GuestRoute";
 import AuthRoute from "./Routes/AuthRoute";
 import { useAuth } from "./hooks/useAuth";
+import CreateContact from "./pages/contacts/Create";
+import EditContact from "./pages/contacts/Edit";
+import ShowContact from "./pages/contacts/Show";
 
 function App() {
     const { loading } = useAuth();
@@ -50,6 +53,31 @@ function App() {
                             element={
                                 <AuthRoute>
                                     <Dashboard />
+                                </AuthRoute>
+                            }
+                        />
+
+                        <Route
+                            path="/contacts/create"
+                            element={
+                                <AuthRoute>
+                                    <CreateContact />
+                                </AuthRoute>
+                            }
+                        />
+                        <Route
+                            path="/contacts/:id"
+                            element={
+                                <AuthRoute>
+                                    <ShowContact />
+                                </AuthRoute>
+                            }
+                        />
+                        <Route
+                            path="/contacts/:id/edit"
+                            element={
+                                <AuthRoute>
+                                    <EditContact />
                                 </AuthRoute>
                             }
                         />

@@ -1,6 +1,7 @@
 // frontend/src/pages/Dashboard.jsx
 
 import { Eye, Edit, Trash2, Plus } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Dashboard() {
     // Dummy data
@@ -31,10 +32,10 @@ export default function Dashboard() {
         <div>
             <div className="flex items-center justify-between mb-6">
                 <h1 className="text-3xl font-bold text-gray-800">My Contacts</h1>
-                <button className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                <Link to="/contacts/create" className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
                     <Plus size={20} />
                     Add Contact
-                </button>
+                </Link>
             </div>
 
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
