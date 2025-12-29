@@ -3,13 +3,13 @@ import Navbar from "../components/Navbar";
 
 const Layout = () => {
     return (
-        <>
+        <div className="min-h-screen bg-gray-50">
             <Navbar />
 
-            <main>
+            <main className="container mx-auto px-4 py-8 max-w-6xl">
                 <Outlet />
             </main>
-        </>
+        </div>
     );
 };
 
