@@ -1,10 +1,30 @@
-// frontend\src\components\Navbar.jsx
-
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "../hooks/useAuth";
+import api from "../lib/axios";
 
 const Navbar = () => {
-    const { user, loading } = useAuth();
+    const { user, loading, setUser } = useAuth();
+    const navigate = useNavigate();
+
+    const logoutMutation = useMutation({
+        mutationFn: async () => {
+            const response = await api.post("/logout");
+            return response.data;
+        },
+        onSuccess: () => {
+            setUser(null);
+            navigate("/login");
+        },
+        onError: (error) => {
+            console.error("Logout failed:", error);
+        },
+    });
+
+    const handleLogout = () => {
+        logoutMutation.mutate();
+    };
 
     if (loading) {
         return <nav>Loading...</nav>;
@@ -18,7 +38,9 @@ const Navbar = () => {
                     <>
                         <Link to="/dashboard">Dashboard</Link>
                         <span>Hi, {user.name}</span>
-                        <button>Logout</button>
+                        <button onClick={handleLogout} disabled={logoutMutation.isPending}>
+                            {logoutMutation.isPending ? "Logging out..." : "Logout"}
+                        </button>
                     </>
                 ) : (
                     <>
