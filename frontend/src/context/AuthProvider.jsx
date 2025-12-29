@@ -6,20 +6,19 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Check if user is authenticated on mount
-    useEffect(() => {
-        const checkAuth = async () => {
-            try {
-                const response = await api.get("/api/user");
-                setUser(response.data);
-            } catch (error) {
-                console.log(error);
-                setUser(null);
-            } finally {
-                setLoading(false);
-            }
-        };
+    const checkAuth = async () => {
+        try {
+            const response = await api.get("/api/user");
+            setUser(response.data);
+        } catch (error) {
+            console.log(error);
+            setUser(null);
+        } finally {
+            setLoading(false);
+        }
+    };
 
+    useEffect(() => {
         checkAuth();
     }, []);
 
