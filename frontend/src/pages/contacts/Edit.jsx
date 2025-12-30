@@ -34,9 +34,8 @@ export default function EditContact() {
             const response = await api.put(`/api/contacts/${id}`, data);
             return response.data;
         },
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["contacts"] });
-            queryClient.invalidateQueries({ queryKey: ["contact", id] });
+        onSuccess: async () => {
+            await Promise.all([queryClient.refetchQueries({ queryKey: ["contacts"] }), queryClient.refetchQueries({ queryKey: ["contact", id] })]);
             navigate("/dashboard");
             setError({});
         },
