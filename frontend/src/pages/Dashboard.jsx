@@ -68,12 +68,12 @@ export default function Dashboard() {
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-right">
                                         <div className="flex items-center justify-end gap-2">
-                                            <button className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="View">
+                                            <Link to={`/contacts/${contact.id}`} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="View">
                                                 <Eye size={18} />
-                                            </button>
-                                            <button className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors" title="Edit">
+                                            </Link>
+                                            <Link to={`/contacts/${contact.id}/edit`} className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors" title="Edit">
                                                 <Edit size={18} />
-                                            </button>
+                                            </Link>
                                             <button onClick={() => handleDelete(contact.id)} className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Delete">
                                                 <Trash2 size={18} />
                                             </button>

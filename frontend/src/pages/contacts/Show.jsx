@@ -14,16 +14,6 @@ export default function ShowContact() {
             <div className="bg-white rounded-lg shadow-md p-8">
                 <div className="flex items-center justify-between mb-6">
                     <h1 className="text-2xl font-bold text-gray-800">Contact Details</h1>
-                    <div className="flex gap-2">
-                        <button className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
-                            <Edit size={18} />
-                            Edit
-                        </button>
-                        <button className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
-                            <Trash2 size={18} />
-                            Delete
-                        </button>
-                    </div>
                 </div>
 
                 <div className="space-y-6">
