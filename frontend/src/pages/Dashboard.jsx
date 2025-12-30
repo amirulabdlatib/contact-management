@@ -1,9 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Eye, Edit, Trash2, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import api from "../lib/axios";
 
 export default function Dashboard() {
+    const queryClient = useQueryClient();
+
     const {
         data: contacts,
         isLoading,
@@ -17,9 +19,22 @@ export default function Dashboard() {
         },
     });
 
+    const deleteMutation = useMutation({
+        mutationFn: async (id) => {
+            await api.delete(`/api/contacts/${id}`);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["contacts"] });
+        },
+        onError: (error) => {
+            alert("Failed to delete contact: " + error.message);
+        },
+    });
+
     const handleDelete = (id) => {
-        console.log("Delete contact:", id);
-        // Show confirmation and delete
+        if (window.confirm(`Are you sure you want to delete?`)) {
+            deleteMutation.mutate(id);
+        }
     };
     if (isLoading) {
         return (
@@ -75,7 +90,7 @@ export default function Dashboard() {
                                             <Link to={`/contacts/${contact.id}/edit`} className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors" title="Edit">
                                                 <Edit size={18} />
                                             </Link>
-                                            <button onClick={() => handleDelete(contact.id)} className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Delete">
+                                            <button onClick={() => handleDelete(contact.id)} disabled={deleteMutation.isPending} className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Delete">
                                                 <Trash2 size={18} />
                                             </button>
                                         </div>

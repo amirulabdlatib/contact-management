@@ -55,8 +55,13 @@ class ContactController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Contact $contact)
     {
-        //
+        if ($contact->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $contact->delete();
+        return response()->noContent();
     }
 }
