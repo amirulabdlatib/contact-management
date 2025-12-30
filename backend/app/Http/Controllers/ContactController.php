@@ -58,9 +58,22 @@ class ContactController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Contact $contact)
     {
-        //
+        if ($contact->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $data = $request->validate([
+            'name' => 'required|max:255',
+            'address' => 'required'
+        ]);
+
+        $contact->update($data);
+
+        return response()->json([
+            'message' => 'Contact updated',
+        ], 201);
     }
 
     /**
