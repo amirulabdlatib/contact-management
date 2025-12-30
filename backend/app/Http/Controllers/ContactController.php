@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ContactController extends Controller
 {
@@ -11,7 +13,17 @@ class ContactController extends Controller
      */
     public function index()
     {
-        //
+        $contacts = Contact::where('user_id', Auth::id())
+            ->select([
+                'id',
+                'name',
+                'address'
+            ])
+            ->get();
+
+        return response()->json([
+            'contacts' => $contacts
+        ]);
     }
 
     /**
