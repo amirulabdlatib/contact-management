@@ -13,7 +13,6 @@ export default function Dashboard() {
         queryKey: ["contacts"],
         queryFn: async () => {
             const response = await api.get("/api/contacts");
-            console.log(response.data);
             return response.data.contacts;
         },
     });
