@@ -23,8 +23,10 @@ export default function Dashboard() {
     };
     if (isLoading) {
         return (
-            <div className="flex items-center justify-center min-h-screen">
-                <p className="text-gray-500">Loading contacts...</p>
+            <div className="animate-pulse">
+                <div className="h-12 bg-gray-200 rounded mb-2"></div>
+                <div className="h-12 bg-gray-200 rounded mb-2"></div>
+                <div className="h-12 bg-gray-200 rounded"></div>
             </div>
         );
     }
