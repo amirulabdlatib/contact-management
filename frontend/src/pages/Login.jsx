@@ -5,8 +5,13 @@ import api, { getCsrfToken } from "../lib/axios";
 import { useAuth } from "../hooks/useAuth";
 
 export default function Login() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [form, setForm] = useState({
+        email: "",
+        password: "",
+    });
+
+    const [error, setError] = useState({});
+
     const navigate = useNavigate();
     const { setUser } = useAuth();
 
@@ -21,14 +26,25 @@ export default function Login() {
             navigate("/dashboard");
             console.log("Login successful:", data);
         },
-        onError: (error) => {
-            console.error("Login failed:", error);
+        onError: (err) => {
+            if (err.response.status === 422) {
+                setError(err.response.data.errors);
+            }
+            console.log("Login failed:", err);
         },
     });
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setForm((formData) => ({
+            ...formData,
+            [name]: value,
+        }));
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        loginMutation.mutate({ email, password });
+        loginMutation.mutate(form);
     };
 
     return (
@@ -42,24 +58,26 @@ export default function Login() {
                             <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
                             <input
                                 type="email"
+                                name="email"
                                 placeholder="Enter your email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                value={form.email}
+                                onChange={handleChange}
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                required
                             />
+                            {error.email && <p className="text-sm text-red-500 mt-1">{error.email[0]}</p>}
                         </div>
 
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
                             <input
                                 type="password"
+                                name="password"
                                 placeholder="Enter your password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                value={form.password}
+                                onChange={handleChange}
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                required
                             />
+                            {error.password && <p className="text-sm text-red-500 mt-1">{error.password[0]}</p>}
                         </div>
 
                         <button
