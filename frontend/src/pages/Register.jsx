@@ -7,10 +7,13 @@ import api, { getCsrfToken } from "../lib/axios";
 import { useAuth } from "../hooks/useAuth";
 
 export default function Register() {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [passwordConfirmation, setPasswordConfirmation] = useState("");
+    const [form, setForm] = useState({
+        name: "",
+        email: "",
+        password: "",
+        password_confirmation: "",
+    });
+
     const navigate = useNavigate();
     const { setUser } = useAuth();
 
@@ -30,14 +33,17 @@ export default function Register() {
         },
     });
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setForm((formData) => ({
+            ...formData,
+            [name]: value,
+        }));
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        registerMutation.mutate({
-            name,
-            email,
-            password,
-            password_confirmation: passwordConfirmation,
-        });
+        registerMutation.mutate(form);
     };
 
     return (
@@ -50,48 +56,48 @@ export default function Register() {
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">Name</label>
                             <input
+                                name="name"
                                 type="text"
                                 placeholder="Enter your name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
+                                value={form.name}
+                                onChange={handleChange}
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                required
                             />
                         </div>
 
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
                             <input
+                                name="email"
                                 type="email"
                                 placeholder="Enter your email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                value={form.email}
+                                onChange={handleChange}
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                required
                             />
                         </div>
 
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
                             <input
+                                name="password"
                                 type="password"
                                 placeholder="Enter your password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                value={form.password}
+                                onChange={handleChange}
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                required
                             />
                         </div>
 
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
                             <input
+                                name="password_confirmation"
                                 type="password"
                                 placeholder="Confirm your password"
-                                value={passwordConfirmation}
-                                onChange={(e) => setPasswordConfirmation(e.target.value)}
+                                value={form.password_confirmation}
+                                onChange={handleChange}
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                required
                             />
                         </div>
 
