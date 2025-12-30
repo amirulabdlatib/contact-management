@@ -31,7 +31,18 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|max:255',
+            'address' => 'required'
+        ]);
+
+        $data['user_id'] = Auth::id();
+
+        Contact::create($data);
+
+        return response()->json([
+            'message' => 'Contact created',
+        ], 201);
     }
 
     /**
