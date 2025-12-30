@@ -14,6 +14,8 @@ export default function Register() {
         password_confirmation: "",
     });
 
+    const [error, setErrors] = useState({});
+
     const navigate = useNavigate();
     const { setUser } = useAuth();
 
@@ -27,9 +29,13 @@ export default function Register() {
             setUser(data.user);
             navigate("/dashboard");
             console.log("Registration successful:", data);
+            setErrors({});
         },
-        onError: (error) => {
-            console.error("Registration failed:", error);
+        onError: (err) => {
+            if (err.response?.status === 422) {
+                setErrors(err.response.data.errors);
+            }
+            console.error(err);
         },
     });
 
@@ -63,6 +69,7 @@ export default function Register() {
                                 onChange={handleChange}
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             />
+                            {error.name && <p className="text-sm text-red-500 mt-1">{error.name[0]}</p>}
                         </div>
 
                         <div>
@@ -75,6 +82,7 @@ export default function Register() {
                                 onChange={handleChange}
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             />
+                            {error.email && <p className="text-sm text-red-500 mt-1">{error.email[0]}</p>}
                         </div>
 
                         <div>
@@ -87,6 +95,7 @@ export default function Register() {
                                 onChange={handleChange}
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             />
+                            {error.password && <p className="text-sm text-red-500 mt-1">{error.password[0]}</p>}
                         </div>
 
                         <div>
